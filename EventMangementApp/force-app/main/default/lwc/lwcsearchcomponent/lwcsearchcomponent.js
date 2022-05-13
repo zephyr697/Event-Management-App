@@ -23,6 +23,7 @@ export default class Lwcsearchcomponent extends LightningElement {
     if (this.isrequired === "true") {
       let picklistInfo = this.template.querySelector("lightning-input");
       picklistInfo.required = true;
+      // eslint-disable-next-line @lwc/lwc/no-api-reassignments
       this.isrequired = "false";
     }
   }
@@ -30,7 +31,7 @@ export default class Lwcsearchcomponent extends LightningElement {
   handleChange(event) {
     var keyword = event.target.value;
     /* Create & dispatch the event to parent component with the search keyword */
-    if (keyword && keyword.length >= 2) {
+    if (keyword) {
       let searchEvent = new CustomEvent("search", {
         detail: { value: keyword }
       });

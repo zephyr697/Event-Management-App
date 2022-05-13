@@ -34,6 +34,8 @@ const columns = [
 export default class EventList extends LightningElement {
   columnsList = columns;
   @track result;
+  @track filteredResult;
+  startDateTime;
   error;
 
   connectedCallback() { 
@@ -59,6 +61,7 @@ export default class EventList extends LightningElement {
       });
 
       this.result = data;
+      this.filteredResult = data;
       this.error = undefined;
     }).catch((err) => {
       this.error = JSON.stringify(err);
@@ -67,4 +70,51 @@ export default class EventList extends LightningElement {
     });
   }
 
+  handleSearch(event) {
+    let keyword = event.detail.value;
+    //console.log(keyword);
+    if (keyword && keyword.length >= 2) {
+      this.filteredResult = this.result.filter((record) => {
+        return record.Name__c.toLowerCase().includes(keyword.toLowerCase());
+      });
+    } else { 
+      // console.log('from Else');
+      // console.log(this.result);
+      this.filteredResult = this.result;
+    }
+    //console.log(this.filteredResult);
+
+
+   }
+
+  
+  handleStartDateChange(event) { 
+    let datetimevalue = event.target.value;
+    if (datetimevalue) {
+      this.filteredResult = this.result.filter((record) => {
+        return record.Start_DateTime__c >= datetimevalue;
+      });
+    } else {
+      // console.log('from Else');
+      // console.log(this.result);
+      this.filteredResult = this.result;
+    }
+  }
+
+  handleLocationChange(event) { 
+    let keyword = event.detail.value;
+    // console.log(keyword);
+    if (keyword && keyword.length >= 2) {
+      this.filteredResult = this.result.filter((record) => {
+        // console.log(record.Location__r.Name);
+        return record.Location__r.Name.toLowerCase().includes(keyword.toLowerCase());
+      });
+      // console.log(this.filteredResult);
+    } else {
+      // console.log('from Else');
+      // console.log(this.result);
+      this.filteredResult = this.result;
+    }
+    //console.log(this.filteredResult);
+  }
 }

@@ -3,9 +3,28 @@
 
 
     <div class="slds-var-m-around_small">
+      <template if:true={error}>{error}</template>
+
+      <lightning-card variant="Narrow" title="Filter" icon-name="standard:search">
+        <div class="slds-var-m-around_small slds-grid slds-gutters">
+          <div class="slds-col slds-align_absolute-center">
+            <c-lwcsearchcomponent search-label="Filter by Event Name" show-label="true" onsearch={handleSearch}>
+            </c-lwcsearchcomponent>
+          </div>
+          <div class="slds-col slds-align_absolute-center">
+            <lightning-input type="datetime" variant="standard" label="Set Start Date/Time" value={startDateTime}
+              onchange={handleStartDateChange}></lightning-input>
+          </div>
+          <div class="slds-col slds-align_absolute-center">
+            <c-lwcsearchcomponent search-label="Filter by Location" show-label="true" onsearch={handleLocationChange}>
+            </c-lwcsearchcomponent>
+          </div>
+        </div>
+      </lightning-card>
 
 
-      <lightning-datatable key-field="id" data={result} show-row-number-column hide-checkbox-column
+
+      <lightning-datatable key-field="id" data={filteredResult} show-row-number-column hide-checkbox-column
         columns={columnsList}></lightning-datatable>
     </div>
 
