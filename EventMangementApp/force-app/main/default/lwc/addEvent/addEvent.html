@@ -1,0 +1,41 @@
+<template>
+    <lightning-card  variant="Narrow"  title="Create a new event" icon-name="standard:event">
+      
+      <div class="slds-m-around_small">
+        <template if:true={errors}>{errors}</template>
+      </div>
+
+      <div class="slds-m-around_small">
+
+        <lightning-input type="text" value={eventRecord.Name} onchange={handleChange} variant="standard" name="Name" label="Name" placeholder="type here.."></lightning-input>
+
+        <c-customlwclookup object-name="Event_Organizer__c" onselect={handleLookup} field-name="Name" parentidfield="Event_Organizer__c"
+          iconname="standard:people" label="Event Organizer"></c-customlwclookup>
+
+        <lightning-input type="datetime" value={eventRecord.Start_DateTime__c}  onchange={handleChange} variant="standard" name="Start_DateTime__c" label="Start Date" placeholder="type here..."></lightning-input>        
+        
+        <lightning-input type="datetime" value={eventRecord.End_Date_Time__c} onchange={handleChange}  variant="standard" name="End_Date_Time__c" label="End Date" placeholder="type here..."></lightning-input>
+        
+        <lightning-input type="number" value={eventRecord.Max_Seats__c}  onchange={handleChange} variant="standard" name="Max_Seats__c" label="Max Attendees" placeholder="type here..."></lightning-input>
+        
+        <c-customlwclookup object-name="Location__c" onselect={handleLookup} field-name="Name" parentidfield="Location__c" iconname="utility:location" label="Event Location"></c-customlwclookup>
+
+        <lightning-input-rich-text 
+        placeholder="Type something interesting" onchange={handleChange} value={eventRecord.Event_Detail__c} label="Event Detail">
+        </lightning-input-rich-text>
+
+        
+      </div>
+
+      <div class="margin:around_small"></div>
+
+      <div class="slds-m-around_small">
+        <lightning-button variant="neutral" label="Cancel" title="Cancel" onclick={handleCancel}></lightning-button>
+        &nbsp;&nbsp;&nbsp;
+        <lightning-button variant="brand" label="Add Event" title="Add Event" onclick={handleClick}></lightning-button>
+        
+      </div>
+
+
+    </lightning-card>
+</template>
